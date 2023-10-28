@@ -156,7 +156,7 @@ const RegisterScreen = () => {
             borderRadius: 6,
             marginLeft: "auto",
             marginRight: "auto",
-            padding: 8,
+            padding: 15,
           }}
         >
           <Text
@@ -167,7 +167,7 @@ const RegisterScreen = () => {
               fontWeight: "bold",
             }}
           >
-            Login
+            Register
           </Text>
         </Pressable>
         <Pressable
