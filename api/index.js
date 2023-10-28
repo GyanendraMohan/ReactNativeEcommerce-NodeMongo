@@ -67,7 +67,7 @@ const sendVerificationEmail = async(email, verificationToken) => {
 }
 
 
-app.post('/register', async (req, res) => {
+app.post("/register", async (req, res) => {
     try {
         const {name, email, password} = req.body;
         //check if user already registered
@@ -92,7 +92,7 @@ app.post('/register', async (req, res) => {
 
 //endpoint to verify the email
 
-app.get('/verify/:token', async(req, res) => {
+app.get("/verify/:token", async(req, res) => {
     try {
         const token = req.params.token;
         //find the user with the verification token

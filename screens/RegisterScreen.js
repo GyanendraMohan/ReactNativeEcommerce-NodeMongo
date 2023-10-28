@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import axios from "axios";
 import {
+  Alert,
   Image,
   KeyboardAvoidingView,
   Pressable,
@@ -11,7 +13,7 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 const RegisterScreen = () => {
@@ -19,7 +21,36 @@ const RegisterScreen = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const navigation = useNavigation();
-
+  const handleRegister = async() => {
+    const user = {
+      name: name,
+      email: email,
+      password: password,
+    }
+   
+    // api  call to register
+    console.log('====================================');
+    console.log(user);
+    console.log('====================================');
+    await axios.post("http://localhost:8000/register", user)
+      .then((response) => {
+        console.log(response);
+        Alert.alert(
+          "Registered Successfully",
+          "You have registered successfully"
+        );
+        setName("");
+        setPassword("");
+        setEmail("");
+      })
+      .catch((error) => {
+        Alert.alert(
+          "Registration Failed",
+          "an error occurred in the registration"
+        );
+        console.log("Registration Failed", error);
+      });
+  };
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "White", alignItems: "center" }}
@@ -58,10 +89,15 @@ const RegisterScreen = () => {
                 marginTop: 30,
               }}
             >
-              <Ionicons name="ios-person" size={24} color="gray" style={{marginLeft: 8}}/>
+              <Ionicons
+                name="ios-person"
+                size={24}
+                color="gray"
+                style={{ marginLeft: 8 }}
+              />
               <TextInput
                 value={name}
-                onChange={(text) => setName(text)}
+                onChangeText={(text) => setName(text)}
                 style={{
                   color: "gray",
                   marginVertical: 10,
@@ -92,7 +128,7 @@ const RegisterScreen = () => {
             />
             <TextInput
               value={email}
-              onChange={(text) => setEmail(text)}
+              onChangeText={(text) => setEmail(text)}
               style={{
                 color: "gray",
                 marginVertical: 10,
@@ -103,7 +139,7 @@ const RegisterScreen = () => {
             />
           </View>
         </View>
-        <View >
+        <View>
           <View
             style={{
               flexDirection: "row",
@@ -124,7 +160,7 @@ const RegisterScreen = () => {
             <TextInput
               value={password}
               secureTextEntry={true}
-              onChange={(text) => setPassword(text)}
+              onChangeText={(text) => setPassword(text)}
               style={{
                 color: "gray",
                 marginVertical: 10,
@@ -150,6 +186,7 @@ const RegisterScreen = () => {
         </View>
         <View style={{ marginTop: 70 }} />
         <Pressable
+          onPress={handleRegister}
           style={{
             width: 200,
             backgroundColor: "#FEBE10",
