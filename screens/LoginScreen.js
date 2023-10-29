@@ -8,15 +8,36 @@ import {
   KeyboardAvoidingView,
   TextInput,
   Pressable,
+  Alert,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigation = useNavigation()
+  const navigation = useNavigation();
+  const handleLogin = () => {
+    const user = {
+      email: email,
+      password: password,
+    };
+    axios
+      .post("http://localhost:8000/login", user)
+      .then((response) => {
+        console.log(response);
+        const token = response.data.token;
+        AsyncStorage.setItem("authToken", token);
+        navigation.replace("Home");
+      })
+      .catch((error) => {
+        Alert.alert("Login Error", "Invalid Email");
+        console.log(error);
+      });
+  };
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "White", alignItems: "center" }}
@@ -62,7 +83,7 @@ const LoginScreen = () => {
             />
             <TextInput
               value={email}
-              onChange={(text) => setEmail(text)}
+              onChangeText={(text) => setEmail(text)}
               style={{
                 color: "gray",
                 marginVertical: 10,
@@ -94,7 +115,7 @@ const LoginScreen = () => {
             <TextInput
               value={password}
               secureTextEntry={true}
-              onChange={(text) => setPassword(text)}
+              onChangeText={(text) => setPassword(text)}
               style={{
                 color: "gray",
                 marginVertical: 10,
@@ -120,6 +141,7 @@ const LoginScreen = () => {
         </View>
         <View style={{ marginTop: 70 }} />
         <Pressable
+          onPress={handleLogin}
           style={{
             width: 200,
             backgroundColor: "#FEBE10",
@@ -140,8 +162,11 @@ const LoginScreen = () => {
             Login
           </Text>
         </Pressable>
-        <Pressable style={{marginTop: 15}} onPress={() => navigation.navigate("Register")}>
-          <Text style={{textAlign: "center", color: "gray", fontSize: 16}}>
+        <Pressable
+          style={{ marginTop: 15 }}
+          onPress={() => navigation.navigate("Register")}
+        >
+          <Text style={{ textAlign: "center", color: "gray", fontSize: 16 }}>
             Don't have an account? Sign Up
           </Text>
         </Pressable>
