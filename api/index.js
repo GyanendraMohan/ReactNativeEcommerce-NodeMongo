@@ -11,8 +11,8 @@ app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
 const jwt = require("jsonwebtoken");
+
 app.listen(port, () => {
   console.log("Server is running on port 8000");
 });
@@ -41,8 +41,8 @@ const sendVerificationEmail = async (email, verificationToken) => {
     // Configure the email service or SMTP details here
     service: "gmail",
     auth: {
-      user: "gmpatel152@gmail.com",
-      pass: "sotreugqzbzjklgy ",
+      user: "mohangyanendramathpatel@gmail.com",
+      pass: "apqu xvri lzhu vkxb",
     },
   });
 
