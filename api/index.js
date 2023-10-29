@@ -18,7 +18,7 @@ app.listen(port, () => {
 });
 
 mongoose
-  .connect("mongodb+srv://sujananand:sujan@cluster0.cueelai.mongodb.net/", {
+  .connect("mongodb+srv://gyanendra:1234@nodeexpressprojects.l1t98wc.mongodb.net/native-ecommerce", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
