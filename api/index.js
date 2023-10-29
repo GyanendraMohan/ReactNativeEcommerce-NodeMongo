@@ -3,10 +3,10 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
+const cors = require("cors");
 
 const app = express();
 const port = 8000;
-const cors = require("cors");
 app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -18,10 +18,13 @@ app.listen(port, () => {
 });
 
 mongoose
-  .connect("mongodb+srv://gyanendra:1234@nodeexpressprojects.l1t98wc.mongodb.net/native-ecommerce", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    "mongodb+srv://gyanendra:1234@nodeexpressprojects.l1t98wc.mongodb.net/native-ecommerce",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => {
     console.log("Connected to MongoDB");
   })
@@ -37,10 +40,10 @@ const sendVerificationEmail = async (email, verificationToken) => {
   const transporter = nodemailer.createTransport({
     // Configure the email service or SMTP details here
     service: "gmail",
-        auth:{
-            user: "gmpatel152@gmail.com",
-            pass:"sotreugqzbzjklgy "
-        },
+    auth: {
+      user: "gmpatel152@gmail.com",
+      pass: "sotreugqzbzjklgy ",
+    },
   });
 
   // Compose the email message
@@ -249,18 +252,18 @@ app.get("/profile/:userId", async (req, res) => {
   }
 });
 
-app.get("/orders/:userId",async(req,res) => {
-  try{
+app.get("/orders/:userId", async (req, res) => {
+  try {
     const userId = req.params.userId;
 
-    const orders = await Order.find({user:userId}).populate("user");
+    const orders = await Order.find({ user: userId }).populate("user");
 
-    if(!orders || orders.length === 0){
-      return res.status(404).json({message:"No orders found for this user"})
+    if (!orders || orders.length === 0) {
+      return res.status(404).json({ message: "No orders found for this user" });
     }
 
     res.status(200).json({ orders });
-  } catch(error){
-    res.status(500).json({ message: "Error"});
+  } catch (error) {
+    res.status(500).json({ message: "Error" });
   }
-})
+});

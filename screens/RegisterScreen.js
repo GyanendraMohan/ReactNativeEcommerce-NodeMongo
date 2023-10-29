@@ -29,9 +29,7 @@ const RegisterScreen = () => {
     }
    
     // api  call to register
-    console.log('====================================');
-    console.log(user);
-    console.log('====================================');
+ 
     await axios.post("http://localhost:8000/register", user)
       .then((response) => {
         console.log(response);
