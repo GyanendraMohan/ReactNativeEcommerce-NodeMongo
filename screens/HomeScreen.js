@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,11 +8,14 @@ import {
   ScrollView,
   Pressable,
   TextInput,
+  Image,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from "@expo/vector-icons";
+import { list, images, deals, offers } from "../mockdata/data";
+
 const HomeScreen = () => {
   return (
     <SafeAreaView
@@ -59,15 +62,44 @@ const HomeScreen = () => {
             alignItems: "center",
             gap: 5,
             padding: 10,
-            backgroundColor:"#AFEEEE",
+            backgroundColor: "#AFEEEE",
           }}
         >
           <Ionicons name="location-outline" size={24} color="black" />
           <Pressable>
-            <Text style={{fontSize:13, fontWeight: "500"}}>Deliver to Gyanendra - Varanasi 221204</Text>
+            <Text style={{ fontSize: 13, fontWeight: "500" }}>
+              Deliver to Gyanendra - Varanasi 221204
+            </Text>
           </Pressable>
           <MaterialIcons name="keyboard-arrow-down" size={24} color="black" />
         </View>
+        <ScrollView horizontal showsVerticalScrollIndicator={false}>
+          {list.map((item, index) => (
+            <Pressable
+              key={index}
+              style={{
+                margin: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Image
+                style={{ width: 50, height: 50, resizeMode: "contain" }}
+                source={{ uri: item.image }}
+              />
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontSize: 12,
+                  fontWeight: "500",
+                  marginTop: 5,
+                }}
+              >
+                {item?.name}
+              </Text>
+            </Pressable>
+          ))}
+        </ScrollView>
       </ScrollView>
     </SafeAreaView>
   );
