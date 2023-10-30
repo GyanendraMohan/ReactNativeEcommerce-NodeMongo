@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -16,8 +16,39 @@ import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { list, images, deals, offers } from "../mockdata/data";
 import { SliderBox } from "react-native-image-slider-box";
+import axios from "axios";
+import ProductItem from "../components/ProductItem";
+import DropDownPicker from "react-native-dropdown-picker";
 
 const HomeScreen = () => {
+  const [products, setProducts] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [category, setCategory] = useState("jewelery");
+  const [items, setItems] = useState([
+    { label: "Men's clothing", value: "men's clothing" },
+    { label: "jewelery", value: "jewelery" },
+    { label: "electronics", value: "electronics" },
+    { label: "women's clothing", value: "women's clothing" },
+  ]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios
+          .get("https://fakestoreapi.com/products")
+          .then((response) => {
+            setProducts(response.data);
+          });
+      } catch (error) {
+        console.log("Error Message", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const onGenderOpen = useCallback(() => {
+    setCompanyOpen(false);
+  },[])
+
   return (
     <SafeAreaView
       style={{
@@ -141,6 +172,7 @@ const HomeScreen = () => {
             </Pressable>
           ))}
         </View>
+
         <Text
           style={{
             height: 1,
@@ -193,6 +225,56 @@ const HomeScreen = () => {
             </Pressable>
           ))}
         </ScrollView>
+
+        <Text
+          style={{
+            height: 1,
+            borderColor: "#D0D0D0",
+            borderWidth: 2,
+            marginTop: 15,
+          }}
+        />
+
+        <View
+          style={{
+            marginHorizontal: 10,
+            marginTop: 20,
+            width: "45%",
+            marginBottom: open ? 50 : 15,
+          }}
+        >
+          <DropDownPicker
+            style={{
+              borderColor: "#B7B7B7",
+              height: 30,
+              marginBottom: open ? 120 : 15,
+            }}
+            open={open}
+            value={category}
+            items={items}
+            setOpen={setOpen}
+            setValue={setCategory}
+            setItems={setItems}
+            placeholder="choose category"
+            placeholderStyle={styles.placeholderStyles}
+            onOpen={onGenderOpen}
+            zIndex={3000}
+            zIndexInverse={1000}
+          />
+        </View>
+
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            flexWrap: "wrap",
+          }}
+        >
+          {products?.filter((item) => item.category === category)
+          .map((item, index) => (
+            <ProductItem item={item} key={index} />
+          ))}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
