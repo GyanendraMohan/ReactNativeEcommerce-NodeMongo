@@ -10,7 +10,9 @@ import {
   TextInput,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { Entypo } from '@expo/vector-icons';
+import { Entypo } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+import { MaterialIcons } from '@expo/vector-icons';
 const HomeScreen = () => {
   return (
     <SafeAreaView
@@ -21,7 +23,14 @@ const HomeScreen = () => {
       }}
     >
       <ScrollView>
-        <View style={{backgroundColor:"#00CED1", padding:10, flexDirection: "row", alignItems:"center"}}>
+        <View
+          style={{
+            backgroundColor: "#00CED1",
+            padding: 10,
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
           <Pressable
             style={{
               flexDirection: "row",
@@ -34,10 +43,30 @@ const HomeScreen = () => {
               flex: 1,
             }}
           >
-            <AntDesign name="search1" size={22} color="black" style={{paddingLeft: 10}}/>
+            <AntDesign
+              name="search1"
+              size={22}
+              color="black"
+              style={{ paddingLeft: 10 }}
+            />
             <TextInput placeholder="Search" />
           </Pressable>
           <Entypo name="mic" size={24} color="black" />
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 5,
+            padding: 10,
+            backgroundColor:"#AFEEEE",
+          }}
+        >
+          <Ionicons name="location-outline" size={24} color="black" />
+          <Pressable>
+            <Text style={{fontSize:13, fontWeight: "500"}}>Deliver to Gyanendra - Varanasi 221204</Text>
+          </Pressable>
+          <MaterialIcons name="keyboard-arrow-down" size={24} color="black" />
         </View>
       </ScrollView>
     </SafeAreaView>
