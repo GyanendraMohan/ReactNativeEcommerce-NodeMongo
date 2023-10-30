@@ -109,6 +109,39 @@ const HomeScreen = () => {
           inactiveDotColor={"#90A4AE"}
           ImageComponentStyle={{ width: "100%" }}
         />
+        <Text
+          style={{
+            padding: 10,
+            fontSize: 18,
+            fontWeight: "500",
+            backgroundColor: "#D3D3F2",
+          }}
+        >
+          Trending Deals of the week
+        </Text>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            flexWrap: "wrap",
+          }}
+        >
+          {deals.map((item, index) => (
+            <Pressable
+              style={{
+                marginVertical: 10,
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Image
+                source={{ uri: item?.image }}
+                style={{ width: 180, height: 180, resizeMode: "contain" }}
+              />
+            </Pressable>
+          ))}
+        </View>
+        <Text style={{height: 1, borderColor:"#D0D0D0", borderWidth: 2, marginTop: 15}}/>
       </ScrollView>
     </SafeAreaView>
   );
