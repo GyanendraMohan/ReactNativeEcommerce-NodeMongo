@@ -15,6 +15,7 @@ import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { list, images, deals, offers } from "../mockdata/data";
+import { SliderBox } from "react-native-image-slider-box";
 
 const HomeScreen = () => {
   return (
@@ -100,6 +101,14 @@ const HomeScreen = () => {
             </Pressable>
           ))}
         </ScrollView>
+        <SliderBox
+          images={images}
+          autoPlay
+          circleLoop
+          dotColor={"#13274F"}
+          inactiveDotColor={"#90A4AE"}
+          ImageComponentStyle={{ width: "100%" }}
+        />
       </ScrollView>
     </SafeAreaView>
   );
