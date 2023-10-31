@@ -19,6 +19,7 @@ import { SliderBox } from "react-native-image-slider-box";
 import axios from "axios";
 import ProductItem from "../components/ProductItem";
 import DropDownPicker from "react-native-dropdown-picker";
+import { useNavigation } from "@react-navigation/native";
 
 const HomeScreen = () => {
   const [products, setProducts] = useState([]);
@@ -30,6 +31,8 @@ const HomeScreen = () => {
     { label: "electronics", value: "electronics" },
     { label: "women's clothing", value: "women's clothing" },
   ]);
+  const navigation = useNavigation();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -189,6 +192,16 @@ const HomeScreen = () => {
         <ScrollView horizontal showsVerticalScrollIndicator={false}>
           {offers.map((item, index) => (
             <Pressable
+              onPress={() => navigation.navigate("Info", {
+                id: item.id,
+                title: item.title,
+                price: item?.price,
+                carouselImages: item.carouselImages,
+                color: item?.color,
+                size: item?.size,
+                oldPrice: item?.oldPrice,
+                item: item
+              })}
               key={index}
               style={{
                 marginVertical: 10,
