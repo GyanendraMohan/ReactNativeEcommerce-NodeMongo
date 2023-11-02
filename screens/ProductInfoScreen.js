@@ -23,7 +23,7 @@ const ProductInfoScreen = () => {
     }, 6000)
   }
   const cart = useSelector((state) => state.cart.cart)
-  console.log(cart);
+  // console.log(cart);
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={{marginTop: 45,backgroundColor:"white"}}>
       <View
