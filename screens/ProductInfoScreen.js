@@ -1,15 +1,29 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { StyleSheet, Text, ScrollView, Pressable, View, TextInput, ImageBackground, Dimensions } from 'react-native'
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { addToCart } from '../redux/CartReducer';
 
 const ProductInfoScreen = () => {
   const route = useRoute();
+  const [addtedToCart, setAddedToCart] = useState(false)
   const {width} = Dimensions.get("window");
   const height = (width * 100) / 100;
+  const dispatch = useDispatch();
+  const addItemToCart = (item) => {
+    setAddedToCart(true)
+    dispatch(addToCart(item))
+    setTimeout(() => {
+        setAddedToCart(false)
+    }, 6000)
+  }
+  const cart = useSelector((state) => state.cart.cart)
+  console.log(cart);
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={{marginTop: 45,backgroundColor:"white"}}>
       <View
@@ -88,8 +102,12 @@ const ProductInfoScreen = () => {
       <Text style={{color:"green", marginHorizontal:10, fontWeight:"500"}}>
         In Stock
       </Text>
-      <Pressable style={{backgroundColor:"#FFC72C", padding: 10, borderRadius: 20, justifyContent:"center", alignItems:"center", marginHorizontal: 10, marginVertical: 10}}>
-        <Text>Add to Cart</Text>
+      <Pressable onPress={() => addItemToCart(route?.params?.item)} style={{backgroundColor:"#FFC72C", padding: 10, borderRadius: 20, justifyContent:"center", alignItems:"center", marginHorizontal: 10, marginVertical: 10}}>
+        {addtedToCart ? (
+            <Text>Added to Cart</Text>
+        ):(
+            <Text>Add to Cart</Text>
+        )}
       </Pressable>
       <Pressable style={{backgroundColor:"#FFEC1C", padding: 10, borderRadius: 20, justifyContent:"center", alignItems:"center", marginHorizontal: 10, marginVertical: 10}}>
         <Text>Buy Now</Text>

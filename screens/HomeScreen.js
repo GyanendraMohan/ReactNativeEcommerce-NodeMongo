@@ -20,6 +20,7 @@ import axios from "axios";
 import ProductItem from "../components/ProductItem";
 import DropDownPicker from "react-native-dropdown-picker";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector, useDispatch } from "react-redux";
 
 const HomeScreen = () => {
   const [products, setProducts] = useState([]);
@@ -32,6 +33,7 @@ const HomeScreen = () => {
     { label: "women's clothing", value: "women's clothing" },
   ]);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,6 +53,9 @@ const HomeScreen = () => {
   const onGenderOpen = useCallback(() => {
     setCompanyOpen(false);
   },[])
+
+  const cart = useSelector((state) => state.cart.cart)
+  console.log(cart)
 
   return (
     <SafeAreaView
@@ -162,6 +167,16 @@ const HomeScreen = () => {
         >
           {deals.map((item, index) => (
             <Pressable
+            onPress={() => navigation.navigate("Info", {
+              id: item.id,
+              title: item.title,
+              price: item?.price,
+              carouselImages: item.carouselImages,
+              color: item?.color,
+              size: item?.size,
+              oldPrice: item?.oldPrice,
+              item: item
+            })}
               style={{
                 marginVertical: 10,
                 flexDirection: "row",
